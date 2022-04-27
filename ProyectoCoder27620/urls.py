@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# Para las urls de static
+from django.conf.urls.static import static
+from django.conf import settings
+
 from ProyectoCoder27620.views import (
     dia_de_hoy,
     saludo,
@@ -26,15 +30,16 @@ from ProyectoCoder27620.views import (
     notas,
 )
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("saludo/", saludo),
     path("saludo/<nombre>", saludo_con_nombre),
     path("hoy/", dia_de_hoy),
-    path("anio/<edad>", anio_nacimiento),
+    path("anio/<int:edad>", anio_nacimiento),
     path("", con_plantilla),
     path("probando/", probando_template),
     path("notas/", notas),
-    # urls de AppCoder. Proximamente las pasaremos a un urls.py propio de AppCoder.
+    # Incluyo urls de AppCoder.
     path("AppCoder/", include("AppCoder.urls")),
 ]
