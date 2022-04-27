@@ -16,10 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# Para las urls de static
-from django.conf.urls.static import static
-from django.conf import settings
-
 from ProyectoCoder27620.views import (
     dia_de_hoy,
     saludo,
@@ -42,6 +38,3 @@ urlpatterns = [
     # urls de AppCoder. Proximamente las pasaremos a un urls.py propio de AppCoder.
     path("AppCoder/", include("AppCoder.urls")),
 ]
-
-# Agrego las urls de static
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
