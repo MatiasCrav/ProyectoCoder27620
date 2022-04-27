@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Heredamos de models.Model para que la clase sea un "modelo" y se use para crear una
-# tabla en la base de datos. Cada vez que se hace un cambio hay que correr 
+# tabla en la base de datos. Cada vez que se hace un cambio hay que correr
 # "python manage.py makemigrations" y "python manage.py migrate" para aplicarlos a la bd.
 class Profesor(models.Model):
     # CharField = campo de texto
@@ -17,8 +17,19 @@ class Profesor(models.Model):
 class Estudiante(models.Model):
     nombre = models.CharField(max_length=200)
     apellido = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
+    email = models.EmailField()
 
     # Podemos crearles __str__ como cualquier clase
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
+
+
+class Curso(models.Model):
+    nombre = models.CharField(max_length=200)
+    comision = models.IntegerField()
+
+
+class Entregable(models.Model):
+    nombre = models.CharField(max_length=200)
+    fecha = models.DateField()
+    entrgado = models.BooleanField()

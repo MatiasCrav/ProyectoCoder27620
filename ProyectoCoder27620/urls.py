@@ -14,7 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+# Para las urls de static
+from django.conf.urls.static import static
+from django.conf import settings
+
 from ProyectoCoder27620.views import (
     dia_de_hoy,
     saludo,
@@ -24,9 +29,6 @@ from ProyectoCoder27620.views import (
     probando_template,
     notas,
 )
-
-# views de AppCoder
-from AppCoder.views import crear_estudiante
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -38,5 +40,8 @@ urlpatterns = [
     path("probando/", probando_template),
     path("notas/", notas),
     # urls de AppCoder. Proximamente las pasaremos a un urls.py propio de AppCoder.
-    path("AppCoder/crear_juan/", crear_estudiante),
+    path("AppCoder/", include("AppCoder.urls")),
 ]
+
+# Agrego las urls de static
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
