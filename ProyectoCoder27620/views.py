@@ -28,7 +28,7 @@ def anio_nacimiento(request, edad):
 
 def con_plantilla(request):
     # Con ruta absoluta al archivo .html
-    # mi_html = open("/home/matiascra/Documents/Coderhouse/Curso 08-02-2022/Clase17/ProyectoCoder27615/ProyectoCoder27615/plantillas/plantilla.html")
+    # mi_html = open("/home/matiascra/Documents/Coderhouse/Curso 08-02-2022/Clase17/ProyectoCoder27620/ProyectoCoder27620/plantillas/plantilla.html")
 
     # Uso una variable del archivo settings.py que tiene la ruta al proyecto. No
     # es exactamente un string y puedo concatenarle texto con la "/"
@@ -46,7 +46,7 @@ def con_plantilla(request):
 
 
 def probando_template(request):
-    mi_html = open(BASE_DIR / "ProyectoCoder27615/plantillas/probando.html")
+    mi_html = open(BASE_DIR / "ProyectoCoder27620/plantillas/probando.html")
     plantilla = Template(mi_html.read())
     mi_html.close()
 
