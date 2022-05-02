@@ -4,11 +4,11 @@ from django.urls import path
 from AppCoder import views
 
 urlpatterns = [
-    path("", views.inicio),
+    path("", views.inicio, name="Inicio"),
     path("crear_juan/", views.crear_estudiante),
-    path("curso/", views.curso),
-    path("entregable/", views.entregable),
-    path("estudiante/", views.estudiante),
-    path("profesor/", views.profesor),
+    path("cursos/", views.cursos, name="Cursos"),
+    path("entregables/", views.entregables, name="Entregables"),
+    path("estudiantes/", views.estudiantes, name="Estudiantes"),
+    path("profesores/", views.profesores, name="Profesores"),
     path("plantilla/", views.plantilla)
 ]
