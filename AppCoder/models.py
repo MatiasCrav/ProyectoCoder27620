@@ -13,6 +13,13 @@ class Profesor(models.Model):
     email = models.EmailField(max_length=200)
     # Hay más tipos de campos: Integer (números enteros), Date (fecha), etc...
 
+    def __str__(self):
+        return f"[Profe] {self.nombre} {self.apellido}"
+
+    # Para que diga 'Profesores' en lugar de 'Profesors' en el admin
+    class Meta:
+        verbose_name_plural = "profesores"
+
 
 class Estudiante(models.Model):
     nombre = models.CharField(max_length=200)
@@ -28,8 +35,17 @@ class Curso(models.Model):
     nombre = models.CharField(max_length=200)
     comision = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.nombre} {self.comision}"
+
 
 class Entregable(models.Model):
     nombre = models.CharField(max_length=200)
     fecha = models.DateField()
     entrgado = models.BooleanField()
+
+    def __str__(self):
+        if self.entrgado:
+            return f"{self.nombre} ✔"
+        else:
+            return f"{self.nombre} ✘"
