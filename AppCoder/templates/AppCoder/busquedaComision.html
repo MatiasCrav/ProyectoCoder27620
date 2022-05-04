@@ -1,0 +1,21 @@
+{% extends 'AppCoder/layout.html' %}
+{% block contenido %}
+    <div class="mx-auto col-lg-7 col-md-6">
+        <h1 class="text-center">Buscar curso</h1>
+        <form class="d-flex"
+              action="{% url 'ResultBuscarCurso' %}"     
+              method="get"
+        >
+            <input
+              class="form-control me-2"
+              type="number"
+              placeholder="Buscar..."
+              name="comision"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Buscar
+            </button>
+          </form>
+    </div>
+{% endblock contenido %}

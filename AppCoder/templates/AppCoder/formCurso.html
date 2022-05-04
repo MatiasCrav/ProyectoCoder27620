@@ -1,0 +1,20 @@
+{% extends 'AppCoder/layout.html' %}
+{% block contenido %}
+<div class="mx-auto col-xl-5 col-lg-6 col-md-7">
+    <h1 class="text-center">Form curso</h1>
+    <form method="post" class="text-center d-flex justify-content-center flex-column mt-3">
+        {% csrf_token %}
+        
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        {% comment "Con html" %}
+            <p> Nombre: <input type="text" name="nombre" class="form-control"></p>
+            <p> Comisión: <input type="text" name="number" class="form-control"></p>
+        {% endcomment %}
+
+        <input type="submit" value="Enviar" class="btn btn-primary mt-3">
+    </form>
+</div>
+{% endblock contenido %}

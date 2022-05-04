@@ -1,0 +1,18 @@
+{% extends 'AppCoder/layout.html' %}
+{% block contenido %}
+    <div class="mx-auto col-lg-7 col-md-6">
+        <h1 class="text-center">Cursos</h1>
+        <p>Comision buscada: {{ comision }}</p>
+
+        <ul>
+            {% for curso in cursos %}
+                <li>
+                    {{ curso }}
+                </li>
+            {% empty %}
+                <h5>No se encontraron resultados que coincidan con su búsqueda</h5>
+            {% endfor %}
+        </ul>
+
+    </div>
+{% endblock contenido %}

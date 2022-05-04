@@ -1,4 +1,12 @@
 {% extends 'AppCoder/layout.html' %}
 {% block contenido %}
-    <h1 class="text-center">Cursos</h1>
+    <div class="mx-auto col-lg-7 col-md-6">
+        <h1 class="text-center">Cursos</h1>
+        <a href="{% url 'CrearCurso' %}" class="btn btn-primary">
+            Crear curso
+        </a>
+        <a href="{% url 'BuscarCurso' %}" class="btn btn-primary">
+            Buscar curso
+        </a>
+    </div>
 {% endblock contenido %}
