@@ -10,7 +10,7 @@ class FormCurso(forms.Form):
 
 class FormRegistrarse(UserCreationForm):
     email = forms.EmailField(
-        # Se puede especificar como tiene que ser el widet y los atributos del tag en el 
+        # Se puede especificar como tiene que ser el widget y los atributos del tag en el 
         # html
         widget=forms.EmailInput(
             attrs={"placeholder": "email...", "style": "background-color: antiquewhite"}
