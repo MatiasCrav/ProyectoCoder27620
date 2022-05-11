@@ -9,12 +9,15 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def inicio(request):
     return render(request, "AppCoder/inicio.html")
 
 
+@login_required
 def crear_estudiante(request):
     estudiante = Estudiante(
         nombre="Juancito", apellido="Perez", email="juan.perez@gmail.com"
@@ -46,6 +49,7 @@ def plantilla(request):
     return render(request, "layout.html")
 
 
+@login_required
 def crear_curso(request):
     if request.method == "POST":
         form = FormCurso(request.POST)
@@ -81,6 +85,7 @@ def resultado_busqueda_curso(request):
     return redirect("BuscarCurso")
 
 
+@login_required
 def eliminar_curso(request, id):
     # Uso Modelo.objects.get(campo=valor) para obtener una instancia de la BD
     curso = Curso.objects.get(id=id)
@@ -89,6 +94,7 @@ def eliminar_curso(request, id):
     return redirect("Cursos")
 
 
+@login_required
 def editar_curso(request, id):
     curso = Curso.objects.get(id=id)
 
@@ -127,7 +133,7 @@ class VerEntregable(DetailView):
     template_name = "AppCoder/ver_entregable.html"
 
 
-class EditarEntregable(UpdateView):
+class EditarEntregable(LoginRequiredMixin, UpdateView):
     model = Entregable
     success_url = "/AppCoder/entregables/"
     fields = ["nombre", "fecha", "entregado"]
@@ -135,7 +141,7 @@ class EditarEntregable(UpdateView):
     template_name = "AppCoder/formEntregable.html"
 
 
-class CrearEntregable(CreateView):
+class CrearEntregable(LoginRequiredMixin, CreateView):
     model = Entregable
     success_url = "/AppCoder/entregables/"
     fields = ["nombre", "fecha", "entregado"]
@@ -143,7 +149,7 @@ class CrearEntregable(CreateView):
     template_name = "AppCoder/formEntregable.html"
 
 
-class EliminarEntregable(DeleteView):
+class EliminarEntregable(LoginRequiredMixin, DeleteView):
     model = Entregable
     success_url = "/AppCoder/entregables/"
 
