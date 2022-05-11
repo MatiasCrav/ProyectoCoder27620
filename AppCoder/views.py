@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 
 from AppCoder.models import Curso, Estudiante, Entregable
 from django.http import HttpResponse
-from .forms import FormCurso
+from .forms import FormCurso, FormRegistrarse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 
 
 def inicio(request):
@@ -143,3 +146,48 @@ class CrearEntregable(CreateView):
 class EliminarEntregable(DeleteView):
     model = Entregable
     success_url = "/AppCoder/entregables/"
+
+
+def registrarse(request):
+    if request.method == "POST":
+        form = FormRegistrarse(data=request.POST)
+        if form.is_valid():
+            form.save()
+            # Uso el 'username' del form para obtener el usuario y loguearlo
+            username = form.cleaned_data["username"]
+            user = User.objects.get(username=username)
+            login(request, user)
+
+            # Vuelvo a inicio
+            return redirect("Inicio")
+        else:
+            error = True
+
+    else:
+        error = False
+        form = FormRegistrarse()
+
+    return render(request, "AppCoder/registrarse.html", {"form": form, "error": error})
+
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+            user = authenticate(username=usuario, password=contra)
+            if user:
+                login(request, user)
+                return redirect("Inicio")
+
+    # Si no me enviaron datos o me los enviaron mal voy al form
+    form = AuthenticationForm()
+    return render(request, "AppCoder/login.html", {"form": form})
+
+
+# Puedo usar la funcion logout() de django.contrib.auth para cerrar sesión
+def logout_request(request):
+    logout(request)
+    return redirect("Inicio")

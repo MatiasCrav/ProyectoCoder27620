@@ -21,4 +21,8 @@ urlpatterns = [
     path("editar_entregable/<pk>", views.EditarEntregable.as_view(), name="EditarEntregable"),
     path("crear_entregable/", views.CrearEntregable.as_view(), name="CrearEntregable"),
     path("eliminar_entregable/<pk>", views.EliminarEntregable.as_view(), name="EliminarEntregable"),
+
+    path("login/", views.login_request, name="Login"),
+    path("logout/", views.logout_request, name="Logout"),
+    path("registrarse/", views.registrarse, name="Registrarse"),
 ]
