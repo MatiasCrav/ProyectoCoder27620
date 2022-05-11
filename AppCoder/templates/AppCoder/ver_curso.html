@@ -1,0 +1,12 @@
+{% extends 'AppCoder/layout.html' %}
+
+
+{% block contenido %}
+<div class="col-md-7 col-lg-6 mx-auto text-center">
+    <h1>Curso</h1>
+    <p> Nombre: {{ curso.nombre }}</p>
+    <p> Comisión: {{ curso.comision }}</p>
+    <a href="{% url 'Cursos' %}">Volver</a>
+</div>
+{% endblock contenido %}
+    
