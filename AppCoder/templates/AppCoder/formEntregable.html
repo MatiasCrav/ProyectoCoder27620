@@ -1,0 +1,17 @@
+{% extends 'AppCoder/layout.html' %}
+{% load static %}
+
+{% block contenido %}
+    <h1 class="text-center">
+        Form Entregable
+    </h1>
+
+    <!-- Pongo clases de bootstrap para que se vea bien pero no hace falta -->
+    <form action="" method="POST"
+          class="d-flex justify-content-center flex-column col-md-7 col-lg-6 mx-auto"
+    >
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Enviar" class="my-3" required>
+    </form>
+{% endblock contenido %}

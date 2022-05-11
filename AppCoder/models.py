@@ -42,10 +42,10 @@ class Curso(models.Model):
 class Entregable(models.Model):
     nombre = models.CharField(max_length=200)
     fecha = models.DateField()
-    entrgado = models.BooleanField()
+    entregado = models.BooleanField()
 
     def __str__(self):
-        if self.entrgado:
+        if self.entregado:
             return f"{self.nombre} ✔"
         else:
             return f"{self.nombre} ✘"
