@@ -1,16 +1,17 @@
-from django.shortcuts import render, redirect
-
-from AppCoder.models import Curso, Estudiante, Entregable
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponse
-from .forms import FormCurso, FormRegistrarse
+from django.shortcuts import redirect, render
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from AppCoder.models import Curso, Entregable, Estudiante
+
+from .forms import FormCurso, FormEditarUsuario, FormRegistrarse
 
 
 def inicio(request):
@@ -197,3 +198,59 @@ def login_request(request):
 def logout_request(request):
     logout(request)
     return redirect("Inicio")
+
+
+@login_required
+def editar_perfil(request):
+    usuario = request.user
+    if request.method == "POST":
+        # Me guardo la info antes de pasarla al formulario para poder
+        # chequear si el nombre de usuario es el mismo al de antes.
+        post_data = {
+            "username": request.POST.get("username"),
+            "email": request.POST.get("email"),
+            "password1": request.POST.get("password1"),
+            "password2": request.POST.get("password2"),
+        }
+        # Si es el mismo username lo mando vacio para que no me de error
+        # por ya existir un usuario con ese username.
+        if post_data.get("username") == usuario.username:
+            post_data["username"] = None
+        form = FormEditarUsuario(data=post_data)
+        if form.is_valid():
+            info = form.cleaned_data
+
+            email = info.get("email")
+            if email:
+                usuario.email = email
+
+            username = info.get("username")
+            if username:
+                usuario.username = username
+
+            pass1 = info.get("password1")
+            pass2 = info.get("password2")
+            if pass1 and pass2:
+                # uso set_password para setear la nueva contraseña encriptada
+                usuario.set_password(pass1)
+                # set password cierra sesion así que vuelvo a hacer login
+                login(request, usuario)
+
+            usuario.save()
+            # Vuelvo a inicio
+            return redirect("Inicio")
+        else:
+            error = True
+
+    else:
+        error = False
+        form = FormEditarUsuario(
+            # El form comienza con los campos propios completos
+            # (excepto la contraseña)
+            initial={
+                "username": usuario.username,
+                "email": usuario.email,
+            }
+        )
+
+    return render(request, "AppCoder/formPerfil.html", {"form": form, "error": error})

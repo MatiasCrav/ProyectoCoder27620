@@ -1,0 +1,15 @@
+{% extends 'AppCoder/layout.html' %}
+{% block contenido %}
+<div class="mx-auto col-xl-5 col-lg-6 col-md-7">
+    <h1 class="text-center">Editar perfil</h1>
+    <form method="post" class="text-center d-flex justify-content-center flex-column mt-3">
+        {% csrf_token %}
+        
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <input type="submit" value="Enviar" class="btn btn-primary mt-3">
+    </form>
+</div>
+{% endblock contenido %}
