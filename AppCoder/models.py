@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Heredamos de models.Model para que la clase sea un "modelo" y se use para crear una
@@ -49,3 +50,8 @@ class Entregable(models.Model):
             return f"{self.nombre} ✔"
         else:
             return f"{self.nombre} ✘"
+
+
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to="avatares", null=True, blank=True)

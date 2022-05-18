@@ -9,12 +9,16 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from AppCoder.models import Curso, Entregable, Estudiante
+from AppCoder.models import Avatar, Curso, Entregable, Estudiante
 
 from .forms import FormCurso, FormEditarUsuario, FormRegistrarse
 
 
 def inicio(request):
+    if request.user.is_authenticated:
+        avatar = Avatar.objects.filter(user=request.user.id)[0].imagen.url
+        return render(request, "AppCoder/inicio.html", {"avatar": avatar})
+
     return render(request, "AppCoder/inicio.html")
 
 
